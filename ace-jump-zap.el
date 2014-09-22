@@ -23,7 +23,7 @@
 
 (defun ajz/maybe-zap-start ()
   (when ajz/zapping
-    (call-interactively 'set-mark-command)))
+    (push-mark)))
 
 (defun ajz/maybe-zap-end ()
   (when ajz/zapping
@@ -52,7 +52,6 @@ up to the selected character."
   (let ((ace-jump-mode-scope 'window))
     (setq ajz/zapping t)
     (call-interactively 'ace-jump-char-mode)
-    (define-key overriding-local-map (kbd "C-g") 'ajz/keyboard-reset)
     (define-key overriding-local-map [t] 'ajz/keyboard-reset)))
 
 ;;;###autoload
