@@ -8,6 +8,12 @@
 ;; Version: 0.0.1
 ;; Package-Requires: ((ace-jump-mode "1.0"))
 ;;
+
+;;; Commentary:
+;;
+;; Bind `(ace-jump-zap-up-to-char)' or `(ace-jump-zap-to-char)' to the
+;; key-binding of your choice.
+
 ;;; Code:
 
 (require 'ace-jump-mode)
