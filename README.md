@@ -8,4 +8,4 @@ Install from [MELPA](melpa.milkbox.net) with `package-install ace-jump-zap`, or 
 
 #### Usage
 
-Bind `(ace-jump-zap-up-to-char)` or `(ace-jump-zap-to-char)` to the key-binding of your heart's desire and zap away.
+Bind `(ace-jump-zap-to-char)` or `(ace-jump-zap-up-to-char)` to the key-binding of your heart's desire and zap away.
