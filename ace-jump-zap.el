@@ -63,5 +63,26 @@ up to and including the selected character."
   (setq ajz/to-char t)
   (ace-jump-zap-up-to-char))
 
+(defun ace-jump-zap-dwim (p)
+  "Without a prefix, call zap-to-char. With a prefix, call
+ace-jump-zap-to-char."
+  (interactive "P")
+  (cond
+   ((not p)
+    (call-interactively 'zap-to-char))
+   (t (call-interactively 'ace-jump-zap-to-char))))
+
+(autoload 'zap-up-to-char "misc"
+    "Kill up to, but not including ARGth occurrence of CHAR.")
+
+(defun ace-jump-zap-up-dwim (p)
+  "Without a prefix, call zap-up-to-char. With a prefix, call
+ace-jump-zap-up-to-char."
+  (interactive "P")
+  (cond 
+   ((not p)
+    (call-interactively 'zap-up-to-char))
+   (t (call-interactively 'ace-jump-zap-up-to-char))))
+
 (provide 'ace-jump-zap)
 ;;; ace-jump-zap.el ends here
