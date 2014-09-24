@@ -5,7 +5,7 @@
 ;; Author: justin talbott <justin@waymondo.com>
 ;; Keywords: convenience, tools, extensions
 ;; URL: https://github.com/waymondo/ace-jump-zap
-;; Version: 0.0.1
+;; Version: 0.0.2
 ;; Package-Requires: ((ace-jump-mode "1.0"))
 ;;
 
@@ -17,6 +17,8 @@
 ;;; Code:
 
 (require 'ace-jump-mode)
+(autoload 'zap-up-to-char "misc"
+  "Kill up to, but not including ARGth occurrence of CHAR.")
 
 (defvar ajz/zapping nil)
 (defvar ajz/to-char nil)
@@ -63,26 +65,23 @@ up to and including the selected character."
   (setq ajz/to-char t)
   (ace-jump-zap-up-to-char))
 
-(defun ace-jump-zap-dwim (p)
-  "Without a prefix, call zap-to-char. With a prefix, call
-ace-jump-zap-to-char."
+;;;###autoload
+(defun ace-jump-zap-to-char-dwim (&optional prefix)
+  "Without PREFIX, call `zap-to-char'. With PREFIX, call
+`ace-jump-zap-to-char'."
   (interactive "P")
-  (cond
-   ((not p)
-    (call-interactively 'zap-to-char))
-   (t (call-interactively 'ace-jump-zap-to-char))))
+  (if prefix
+      (ace-jump-zap-to-char)
+    (call-interactively 'zap-to-char)))
 
-(autoload 'zap-up-to-char "misc"
-    "Kill up to, but not including ARGth occurrence of CHAR.")
-
-(defun ace-jump-zap-up-dwim (p)
-  "Without a prefix, call zap-up-to-char. With a prefix, call
-ace-jump-zap-up-to-char."
+;;;###autoload
+(defun ace-jump-zap-up-to-char-dwim (&optional prefix)
+  "Without PREFIX, call `zap-up-to-char'. With PREFIX, call
+`ace-jump-zap-up-to-char'."
   (interactive "P")
-  (cond 
-   ((not p)
-    (call-interactively 'zap-up-to-char))
-   (t (call-interactively 'ace-jump-zap-up-to-char))))
+  (if prefix
+      (ace-jump-zap-up-to-char)
+    (call-interactively 'zap-up-to-char)))
 
 (provide 'ace-jump-zap)
 ;;; ace-jump-zap.el ends here
