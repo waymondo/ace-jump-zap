@@ -52,7 +52,8 @@ up to the selected character."
   (let ((ace-jump-mode-scope 'window))
     (setq ajz/zapping t)
     (call-interactively 'ace-jump-char-mode)
-    (define-key overriding-local-map [t] 'ajz/keyboard-reset)))
+    (when overriding-local-map
+      (define-key overriding-local-map [t] 'ajz/keyboard-reset))))
 
 ;;;###autoload
 (defun ace-jump-zap-to-char ()
