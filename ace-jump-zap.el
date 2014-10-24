@@ -5,7 +5,7 @@
 ;; Author: justin talbott <justin@waymondo.com>
 ;; Keywords: convenience, tools, extensions
 ;; URL: https://github.com/waymondo/ace-jump-zap
-;; Version: 0.0.2
+;; Version: 0.0.3
 ;; Package-Requires: ((ace-jump-mode "1.0"))
 ;;
 
@@ -25,6 +25,11 @@
 (defvar ajz/to-char nil
   "Internal flag for determining if zapping to-char or up-to-char.")
 
+(defcustom ajz/zap-function 'delete-region
+  "This is the function used for zapping the text between the point and
+the chosen character. The default is `delete-region' but it could also
+be `kill-region'.")
+
 (defun ajz/maybe-zap-start ()
   "Push the mark when zapping with `ace-jump-char-mode'."
   (when ajz/zapping
@@ -34,7 +39,10 @@
   "Zap after jumping with `ace-jump-char-mode.'"
   (when ajz/zapping
     (when ajz/to-char (forward-char))
-    (call-interactively 'delete-region)
+    (cond ((eq ajz/zap-function 'delete-region)
+           (call-interactively 'delete-region))
+          ((eq ajz/zap-function 'kill-region)
+           (kill-region (point) (mark))))
     (deactivate-mark))
   (ajz/reset))
 
