@@ -20,14 +20,18 @@
 (autoload 'zap-up-to-char "misc"
   "Kill up to, but not including ARGth occurrence of CHAR.")
 
-(defvar ajz/zapping nil)
-(defvar ajz/to-char nil)
+(defvar ajz/zapping nil
+  "Internal flag for detecting if currently zapping.")
+(defvar ajz/to-char nil
+  "Internal flag for determining if zapping to-char or up-to-char.")
 
 (defun ajz/maybe-zap-start ()
+  "Push the mark when zapping with `ace-jump-char-mode'."
   (when ajz/zapping
     (push-mark)))
 
 (defun ajz/maybe-zap-end ()
+  "Zap after jumping with `ace-jump-char-mode.'"
   (when ajz/zapping
     (when ajz/to-char (forward-char))
     (call-interactively 'delete-region)
@@ -35,10 +39,13 @@
   (ajz/reset))
 
 (defun ajz/reset ()
+  "Reset the internal zapping variable flags."
   (setq ajz/zapping nil)
   (setq ajz/to-char nil))
 
 (defun ajz/keyboard-reset ()
+  "Reset when `ace-jump-mode' is cancelled or chosen
+character isn't found while zapping."
   (interactive)
   (ajz/reset)
   (ace-jump-done))
