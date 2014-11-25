@@ -1,3 +1,6 @@
+[![MELPA](http://melpa.org/packages/ace-jump-zap-badge.svg)](http://melpa.org/#/ace-jump-zap)
+[![MELPA Stable](http://stable.melpa.org/packages/ace-jump-zap-badge.svg)](http://stable.melpa.org/#/ace-jump-zap)
+
 ### Ace Jump Zap
 
 `ace-jump-zap` provides the functionality of [`zap-to-char`](http://www.emacswiki.org/emacs/ZapToChar) and [`zap-up-to-char`](http://www.emacswiki.org/emacs/ZapUpToChar) using [`ace-jump-mode`](https://github.com/winterTTr/ace-jump-mode). In a nutshell, you may trigger a key-binding to launch `ace-jump-char-mode` to vaporize all characters between the cursor and the selected character.
