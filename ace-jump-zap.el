@@ -24,10 +24,16 @@
   "Internal flag for detecting if currently zapping.")
 (defvar ajz/to-char nil
   "Internal flag for determining if zapping to-char or up-to-char.")
+(defvar ajz/saved-point nil
+  "Internal variable for caching the current point.")
 
 (defcustom ajz/zap-function 'delete-region
   "This is the function used for zapping between point and char.
 The default is `delete-region' but it could also be `kill-region'.")
+
+(defcustom ajz/forward-only nil
+  "Set to non-nil to choose whether to zap forward only.
+Default will zap in both directions in the current window.")
 
 (defun ajz/maybe-zap-start ()
   "Push the mark when zapping with `ace-jump-char-mode'."
@@ -57,6 +63,10 @@ Also called when chosen character isn't found while zapping."
   (ajz/reset)
   (ace-jump-done))
 
+(defun ajz/forward-query ()
+  "Filter for checking if jump candidate is after point."
+  (< ajz/saved-point (point)))
+
 (add-hook 'ace-jump-mode-before-jump-hook #'ajz/maybe-zap-start)
 (add-hook 'ace-jump-mode-end-hook #'ajz/maybe-zap-end)
 
@@ -64,7 +74,9 @@ Also called when chosen character isn't found while zapping."
 (defun ace-jump-zap-up-to-char ()
   "Call `ace-jump-char-mode' and zap all characters up to the selected character."
   (interactive)
-  (let ((ace-jump-mode-scope 'window))
+  (let ((ace-jump-mode-scope 'window)
+        (ajz/saved-point (point))
+        (ace-jump-search-filter (when ajz/forward-only 'ajz/forward-query)))
     (setq ajz/zapping t)
     (call-interactively 'ace-jump-char-mode)
     (when overriding-local-map
