@@ -26,9 +26,8 @@
   "Internal flag for determining if zapping to-char or up-to-char.")
 
 (defcustom ajz/zap-function 'delete-region
-  "This is the function used for zapping the text between the point and
-the chosen character. The default is `delete-region' but it could also
-be `kill-region'.")
+  "This is the function used for zapping between point and char.
+The default is `delete-region' but it could also be `kill-region'.")
 
 (defun ajz/maybe-zap-start ()
   "Push the mark when zapping with `ace-jump-char-mode'."
@@ -36,7 +35,7 @@ be `kill-region'.")
     (push-mark)))
 
 (defun ajz/maybe-zap-end ()
-  "Zap after jumping with `ace-jump-char-mode.'"
+  "Zap after jumping with `ace-jump-char-mode.'."
   (when ajz/zapping
     (when ajz/to-char (forward-char))
     (cond ((eq ajz/zap-function 'delete-region)
@@ -52,8 +51,8 @@ be `kill-region'.")
   (setq ajz/to-char nil))
 
 (defun ajz/keyboard-reset ()
-  "Reset when `ace-jump-mode' is cancelled or chosen
-character isn't found while zapping."
+  "Reset when `ace-jump-mode' is cancelled.
+Also called when chosen character isn't found while zapping."
   (interactive)
   (ajz/reset)
   (ace-jump-done))
@@ -63,8 +62,7 @@ character isn't found while zapping."
 
 ;;;###autoload
 (defun ace-jump-zap-up-to-char ()
-  "Call `ace-jump-char-mode' and zap all characters
-up to the selected character."
+  "Call `ace-jump-char-mode' and zap all characters up to the selected character."
   (interactive)
   (let ((ace-jump-mode-scope 'window))
     (setq ajz/zapping t)
@@ -74,16 +72,15 @@ up to the selected character."
 
 ;;;###autoload
 (defun ace-jump-zap-to-char ()
-  "Call `ace-jump-char-mode' and zap all characters
-up to and including the selected character."
+  "Call `ace-jump-char-mode' and zap all characters up to and including the selected character."
   (interactive)
   (setq ajz/to-char t)
   (ace-jump-zap-up-to-char))
 
 ;;;###autoload
 (defun ace-jump-zap-to-char-dwim (&optional prefix)
-  "Without PREFIX, call `zap-to-char'. With PREFIX, call
-`ace-jump-zap-to-char'."
+  "Without PREFIX, call `zap-to-char'.
+With PREFIX, call `ace-jump-zap-to-char'."
   (interactive "P")
   (if prefix
       (ace-jump-zap-to-char)
@@ -91,8 +88,8 @@ up to and including the selected character."
 
 ;;;###autoload
 (defun ace-jump-zap-up-to-char-dwim (&optional prefix)
-  "Without PREFIX, call `zap-up-to-char'. With PREFIX, call
-`ace-jump-zap-up-to-char'."
+  "Without PREFIX, call `zap-up-to-char'.
+With PREFIX, call `ace-jump-zap-up-to-char'."
   (interactive "P")
   (if prefix
       (ace-jump-zap-up-to-char)
