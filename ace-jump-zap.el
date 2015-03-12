@@ -17,6 +17,7 @@
 ;;; Code:
 
 (require 'ace-jump-mode)
+(require 'dash)
 (autoload 'zap-up-to-char "misc"
   "Kill up to, but not including ARGth occurrence of CHAR.")
 
