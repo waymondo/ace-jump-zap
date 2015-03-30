@@ -5,7 +5,7 @@
 ;; Author: justin talbott <justin@waymondo.com>
 ;; Keywords: convenience, tools, extensions
 ;; URL: https://github.com/waymondo/ace-jump-zap
-;; Version: 0.1.1
+;; Version: 0.1.2
 ;; Package-Requires: ((ace-jump-mode "1.0") (dash "2.10.0"))
 ;;
 
@@ -53,7 +53,9 @@ Enabled by default as of 0.1.0.")
 (defun ajz/maybe-zap-end ()
   "Zap after jumping with `ace-jump-char-mode.'."
   (when ajz/zapping
-    (when ajz/to-char (forward-char))
+    (if (ajz/forward-query)
+        (when ajz/to-char (forward-char))
+      (unless ajz/to-char (forward-char)))
     (cond ((eq ajz/zap-function 'delete-region)
            (call-interactively 'delete-region))
           ((eq ajz/zap-function 'kill-region)
@@ -121,8 +123,8 @@ Also called when chosen character isn't found while zapping."
 (defun ace-jump-zap-up-to-char ()
   "Call `ace-jump-char-mode' and zap all characters up to the selected character."
   (interactive)
+  (setq ajz/saved-point (point))
   (let ((ace-jump-mode-scope 'window)
-        (ajz/saved-point (point))
         (ace-jump-search-filter (when ajz/forward-only 'ajz/forward-query)))
     (setq ajz/zapping t)
     (call-interactively 'ace-jump-char-mode)
