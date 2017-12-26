@@ -1,6 +1,6 @@
 ;;; ace-jump-zap.el --- Character zapping, `ace-jump-mode` style
 
-;; Copyright (C) 2014  justin talbott
+;; Copyright (C) 2014-2017 justin talbott
 
 ;; Author: justin talbott <justin@waymondo.com>
 ;; Keywords: convenience, tools, extensions
@@ -29,22 +29,36 @@
 (defvar ajz/saved-point nil
   "Internal variable for caching the current point.")
 
+(defgroup ace-jump-zap nil
+  "Character zapping, `ace-jump-mode' style"
+  :version "0.1.2"
+  :link '(url-link "https://github.com/waymondo/ace-jump-zap")
+  :group 'convenience)
+
 (defcustom ajz/zap-function 'delete-region
   "This is the function used for zapping between point and char.
-The default is `delete-region' but it could also be `kill-region'.")
+The default is `delete-region' but it could also be `kill-region'."
+  :type 'symbol
+  :group 'ace-jump-zap)
 
 (defcustom ajz/forward-only nil
   "Set to non-nil to choose to only zap forward from the point.
-Default will zap in both directions from the point in the current window.")
+Default will zap in both directions from the point in the current window."
+  :type 'boolean
+  :group 'ace-jump-zap)
 
 (defcustom ajz/sort-by-closest t
   "Non-nil means sort the zap candidates by proximity to the current point.
 Set to nil for the default `ace-jump-mode' ordering.
-Enabled by default as of 0.1.0.")
+Enabled by default as of 0.1.0."
+  :type 'boolean
+  :group 'ace-jump-zap)
 
 (defcustom ajz/52-character-limit t
   "Set to non-nil to limit zapping reach to the first 52 characters.
-Enabled by default as of 0.1.0.")
+Enabled by default as of 0.1.0."
+  :type 'boolean
+  :group 'ace-jump-zap)
 
 (defun ajz/maybe-zap-start ()
   "Push the mark when zapping with `ace-jump-char-mode'."
